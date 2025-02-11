@@ -22,6 +22,16 @@ app.post('/api/pexels', async (req, res) => {
     return res.json(videos)
 })
 
+app.post('/api/pexels-photo', async (req, res) => {
+    const query = req.body.query
+    const orientation = req.body.orientation
+
+    const client = createClient(process.env.PEXELS_API_KEY)
+    
+    const photos = await client.photos.search({ query, per_page: 8, orientation })
+    return res.json(photos)
+})
+
 app.listen(PORT, () => console.log(`Server running on port: ${PORT}`))
 
 module.exports = app
